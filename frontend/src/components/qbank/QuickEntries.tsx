@@ -15,7 +15,7 @@ export function QuickEntries({ courseCode }: { courseCode: string }) {
   const [data, setData] = useState<QuickData | null>(null);
 
   useEffect(() => {
-    fetch(`http://localhost:8000/api/quiz/quick?course_code=${courseCode}`)
+    fetch(`/api/quiz/quick?course_code=${courseCode}`)
       .then((r) => r.json())
       .then(setData)
       .catch(() => {});

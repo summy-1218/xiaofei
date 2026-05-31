@@ -15,7 +15,7 @@ export function ResourceOverview({ courseCode }: { courseCode: string }) {
   const [data, setData] = useState<OverviewData | null>(null);
 
   useEffect(() => {
-    fetch(`http://localhost:8000/api/materials/overview?course_code=${courseCode}`)
+    fetch(`/api/materials/overview?course_code=${courseCode}`)
       .then((r) => r.json())
       .then(setData)
       .catch(() => {});

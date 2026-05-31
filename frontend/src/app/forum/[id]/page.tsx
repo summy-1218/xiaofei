@@ -31,7 +31,7 @@ export default function PostDetailPage() {
   const [replyText, setReplyText] = useState("");
 
   useEffect(() => {
-    fetch(`http://localhost:8000/api/forum/posts/${postId}`)
+    fetch(`/api/forum/posts/${postId}`)
       .then((r) => r.json())
       .then((data) => { setPost(data); setLoading(false); })
       .catch(() => setLoading(false));

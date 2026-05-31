@@ -8,7 +8,7 @@ interface PulseData { totalPosts: number; solvedRate: number; todayNew: number; 
 export function PulseStrip({ courseCode }: { courseCode: string }) {
   const [data, setData] = useState<PulseData | null>(null);
   useEffect(() => {
-    fetch(`http://localhost:8000/api/forum/pulse?course_code=${courseCode}`)
+    fetch(`/api/forum/pulse?course_code=${courseCode}`)
       .then((r) => r.json()).then(setData).catch(() => {});
   }, [courseCode]);
 

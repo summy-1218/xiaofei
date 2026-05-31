@@ -23,7 +23,7 @@ export function StatStrip({ courseCode }: { courseCode: string }) {
   const [stats, setStats] = useState<Stat[]>([]);
 
   useEffect(() => {
-    fetch(`http://localhost:8000/api/quiz/stats?course_code=${courseCode}`)
+    fetch(`/api/quiz/stats?course_code=${courseCode}`)
       .then((r) => r.json())
       .then(setStats)
       .catch(() => setStats(skeletonStats()));

@@ -23,7 +23,7 @@ export function ReadingGrid({ courseCode }: { courseCode: string }) {
 
   useEffect(() => {
     setLoading(true);
-    fetch(`http://localhost:8000/api/materials/reading?course_code=${courseCode}`)
+    fetch(`/api/materials/reading?course_code=${courseCode}`)
       .then((r) => r.json())
       .then((data) => { setList(data); setLoading(false); })
       .catch(() => setLoading(false));
@@ -55,7 +55,7 @@ export function ReadingGrid({ courseCode }: { courseCode: string }) {
         <article key={item.id} className="ppt-card">
           <a href={`/materials/preview/${item.id}`} className="ppt-thumb">
             {item.thumbnailUrl ? (
-              <img src={`http://localhost:8000${item.thumbnailUrl}`} alt={item.title} loading="lazy" />
+              <img src={`${item.thumbnailUrl}`} alt={item.title} loading="lazy" />
             ) : (
               <div className="ppt-thumb-fallback">PDF</div>
             )}
@@ -74,7 +74,7 @@ export function ReadingGrid({ courseCode }: { courseCode: string }) {
               <a className="ppt-btn-ghost" href={`/materials/preview/${item.id}`}>
                 <Eye size={14} />在线浏览
               </a>
-              <a className="ppt-btn-primary" href={`http://localhost:8000/api/materials/download/${item.id}`} download>
+              <a className="ppt-btn-primary" href={`/api/materials/download/${item.id}`} download>
                 <Download size={14} />下载
               </a>
             </div>

@@ -25,7 +25,7 @@ export default function PreviewPage() {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    fetch("http://localhost:8000/api/materials/list", {
+    fetch("/api/materials/list", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({}),
@@ -42,8 +42,8 @@ export default function PreviewPage() {
   const fname = (material as any)?.fileName || (material as any)?.filename || "";
   const isPPT = fname.toLowerCase().endsWith(".ppt") || fname.toLowerCase().endsWith(".pptx");
   const isPDF = fname.toLowerCase().endsWith(".pdf");
-  const downloadUrl = `http://localhost:8000/api/materials/download/${materialId}`;
-  const previewUrl = `http://localhost:8000/api/materials/download/${materialId}?inline=1`;
+  const downloadUrl = `/api/materials/download/${materialId}`;
+  const previewUrl = `/api/materials/download/${materialId}?inline=1`;
   const [pdfBlobUrl, setPdfBlobUrl] = useState("");
 
   // fetch PDF as blob to avoid cross-origin iframe issues

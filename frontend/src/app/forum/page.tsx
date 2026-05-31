@@ -14,7 +14,7 @@ export default function ForumPage() {
 
   const handlePost = useCallback(async (title: string, content: string) => {
     try {
-      await fetch("http://localhost:8000/api/forum/posts", {
+      await fetch("/api/forum/posts", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ title, content }),

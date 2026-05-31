@@ -24,7 +24,7 @@ function PptCard({ ppt }: { ppt: Ppt }) {
     <article className="ppt-card">
       <a href={`/materials/preview/${ppt.id}`} className="ppt-thumb">
         {ppt.thumbnailUrl ? (
-          <img src={`http://localhost:8000${ppt.thumbnailUrl}`} alt={ppt.title} loading="lazy" />
+          <img src={`${ppt.thumbnailUrl}`} alt={ppt.title} loading="lazy" />
         ) : (
           <div className="ppt-thumb-fallback">PPT</div>
         )}
@@ -52,7 +52,7 @@ function PptCard({ ppt }: { ppt: Ppt }) {
           </a>
           <a
             className="ppt-btn-primary"
-            href={`http://localhost:8000/api/materials/download/${ppt.id}`}
+            href={`/api/materials/download/${ppt.id}`}
             download
           >
             <Download size={14} />下载
@@ -79,7 +79,7 @@ function PptRow({ ppt }: { ppt: Ppt }) {
       <span className="text-xs text-muted">浏览 {ppt.viewCount}</span>
       <div className="ppt-actions" style={{ border: 0, margin: 0, padding: 0 }}>
         <a className="ppt-btn-ghost" href={`/materials/preview/${ppt.id}`}><Eye size={14} /></a>
-        <a className="ppt-btn-primary" href={`http://localhost:8000/api/materials/download/${ppt.id}`} download><Download size={14} /></a>
+        <a className="ppt-btn-primary" href={`/api/materials/download/${ppt.id}`} download><Download size={14} /></a>
       </div>
     </div>
   );
@@ -99,7 +99,7 @@ export function PptGrid({ courseCode }: { courseCode: string }) {
     const params = new URLSearchParams({ course_code: courseCode, sort });
     if (tag) params.set("tag", tag);
     if (query) params.set("q", query);
-    fetch(`http://localhost:8000/api/materials/ppt?${params}`)
+    fetch(`/api/materials/ppt?${params}`)
       .then((r) => r.json())
       .then((data) => { setList(data); setLoading(false); })
       .catch(() => setLoading(false));

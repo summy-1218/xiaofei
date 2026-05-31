@@ -14,7 +14,7 @@ export default function MaterialsPage() {
   const setCounts = useMaterialsStore((s) => s.setCounts);
 
   useEffect(() => {
-    fetch("http://localhost:8000/api/materials/overview?course_code=081")
+    fetch("/api/materials/overview?course_code=081")
       .then((r) => r.json())
       .then((d) => setCounts({ pptCount: d.pptCount, videoCount: d.videoCount, readingCount: d.readingCount }))
       .catch(() => {});

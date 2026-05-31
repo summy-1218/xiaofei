@@ -17,7 +17,7 @@ export function ToolbarRow() {
   const [tags, setTags] = useState<string[]>([]);
 
   useEffect(() => {
-    fetch("http://localhost:8000/api/materials/tags")
+    fetch("/api/materials/tags")
       .then((r) => r.json())
       .then(setTags)
       .catch(() => {});

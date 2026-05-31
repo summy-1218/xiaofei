@@ -87,7 +87,7 @@ export default function QuizSessionPage() {
             {q.img && (
               <div className="mb-4 rounded-lg border border-hairline overflow-hidden bg-white">
                 <img
-                  src={`http://localhost:8000${q.img}`}
+                  src={`${q.img}`}
                   alt="题目配图"
                   className="w-full max-h-[400px] object-contain"
                 />
@@ -134,7 +134,7 @@ export default function QuizSessionPage() {
               {q.ans_img && (
                 <div className="mb-3 rounded-lg border border-hairline overflow-hidden bg-white">
                   <img
-                    src={`http://localhost:8000${q.ans_img}`}
+                    src={`${q.ans_img}`}
                     alt="答案解析配图"
                     className="w-full max-h-[300px] object-contain"
                   />

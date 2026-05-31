@@ -98,7 +98,7 @@ export function PostFeed({ courseCode }: { courseCode: string }) {
     const params = new URLSearchParams({ course_code: courseCode, view, sort });
     if (statusFilters.length) params.set("status", statusFilters.join(","));
     if (query) params.set("q", query);
-    fetch(`http://localhost:8000/api/forum/posts?${params}`)
+    fetch(`/api/forum/posts?${params}`)
       .then((r) => r.json())
       .then((data) => { setPosts(data); setLoading(false); })
       .catch(() => setLoading(false));
