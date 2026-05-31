@@ -6,7 +6,5 @@ __pycache__/
 .claude/
 *.log
 data/quiz/Figures/
-data/courseware/
 data/thumbnails/
 data/chroma/
-*.pdf
