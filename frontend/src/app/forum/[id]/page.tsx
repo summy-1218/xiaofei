@@ -24,7 +24,7 @@ interface PostDetail {
 export default function PostDetailPage() {
   const params = useParams();
   const router = useRouter();
-  const postId = params.id as string;
+  const postId = (params?.id ?? "") as string;
 
   const [post, setPost] = useState<PostDetail | null>(null);
   const [loading, setLoading] = useState(true);

@@ -20,7 +20,7 @@ function getBasename(m: MaterialInfo): string {
 export default function PreviewPage() {
   const params = useParams();
   const router = useRouter();
-  const materialId = params.id as string;
+  const materialId = (params?.id ?? "") as string;
   const [material, setMaterial] = useState<MaterialInfo | null>(null);
   const [loading, setLoading] = useState(true);
 

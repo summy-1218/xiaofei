@@ -11,7 +11,7 @@ import { chat, type ChatMessage } from "@/lib/api";
 export default function ThreadPage() {
   const params = useParams();
   const router = useRouter();
-  const threadId = params.id as string;
+  const threadId = (params?.id ?? "") as string;
 
   const {
     threads,
