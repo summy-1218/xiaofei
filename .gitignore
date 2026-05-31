@@ -5,6 +5,4 @@ __pycache__/
 .env
 .claude/
 *.log
-data/quiz/Figures/
-data/thumbnails/
 data/chroma/
