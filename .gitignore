@@ -1,0 +1,12 @@
+node_modules/
+.next/
+__pycache__/
+*.pyc
+.env
+.claude/
+*.log
+data/quiz/Figures/
+data/courseware/
+data/thumbnails/
+data/chroma/
+*.pdf

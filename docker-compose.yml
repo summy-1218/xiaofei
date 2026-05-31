@@ -1,0 +1,74 @@
+version: "3.8"
+
+services:
+  # ── 前端 (Next.js) ──────────────────────────
+  frontend:
+    build: ./frontend
+    ports:
+      - "3000:3000"
+    environment:
+      - NEXT_PUBLIC_API_URL=http://backend:8000/api
+    depends_on:
+      - backend
+    volumes:
+      - ./frontend/src:/app/src
+    command: npm run dev
+
+  # ── 后端 (FastAPI) ──────────────────────────
+  backend:
+    build: ./backend
+    ports:
+      - "8000:8000"
+    environment:
+      - DATABASE_URL=postgresql+asyncpg://postgres:postgres@db:5432/xiaofei
+      - CHROMA_PERSIST_DIR=/data/chroma
+      - OPENAI_API_KEY=${OPENAI_API_KEY:-}
+      - ANTHROPIC_API_KEY=${ANTHROPIC_API_KEY:-}
+    depends_on:
+      - db
+      - chroma
+    volumes:
+      - ./backend:/app
+      - ./data:/data
+    command: uvicorn app.main:app --host 0.0.0.0 --port 8000 --reload
+
+  # ── PostgreSQL ───────────────────────────────
+  db:
+    image: pgvector/pgvector:pg16
+    ports:
+      - "5432:5432"
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_DB: xiaofei
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+
+  # ── ChromaDB ─────────────────────────────────
+  chroma:
+    image: chromadb/chroma:latest
+    ports:
+      - "8001:8000"
+    volumes:
+      - ./data/chroma:/chroma/chroma
+
+  # ── Neo4j (Phase 2) ──────────────────────────
+  # neo4j:
+  #   image: neo4j:5-community
+  #   ports:
+  #     - "7474:7474"
+  #     - "7687:7687"
+  #   environment:
+  #     NEO4J_AUTH: neo4j/password
+  #   volumes:
+  #     - neo4jdata:/data
+
+  # ── Redis (Phase 2) ──────────────────────────
+  # redis:
+  #   image: redis:7-alpine
+  #   ports:
+  #     - "6379:6379"
+
+volumes:
+  pgdata:
+  # neo4jdata:
