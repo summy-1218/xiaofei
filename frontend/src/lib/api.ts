@@ -30,10 +30,10 @@ export const auth = {
 
 // ── Chat ─────────────────────────────────────
 export const chat = {
-  send: (threadId: string, message: string, forcePro = false) =>
+  send: (threadId: string, message: string, history?: { role: string; content: string }[], forcePro = false) =>
     request<{ thread_id: string; reply: ChatMessage }>("/chat/send", {
       method: "POST",
-      body: JSON.stringify({ thread_id: threadId, message, force_pro: forcePro }),
+      body: JSON.stringify({ thread_id: threadId, message, history, force_pro: forcePro }),
     }),
   getSessions: () => request<ChatSession[]>("/chat/sessions"),
   getMessages: (sessionId: string) =>

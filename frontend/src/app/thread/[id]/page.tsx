@@ -49,7 +49,8 @@ export default function ThreadPage() {
     let full = "";
 
     try {
-      const result = await chat.send(threadId, userMsg, forcePro);
+      const history = msgs.slice(0, -1).map((m) => ({ role: m.role, content: m.content }));
+      const result = await chat.send(threadId, userMsg, history, forcePro);
       full = result.reply.content || "";
 
       // 流式渲染

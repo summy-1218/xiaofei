@@ -123,7 +123,8 @@ function handleGET(p: string, req: NextApiRequest, res: NextApiResponse) {
 
 function handlePOST(p: string, body: any, res: NextApiResponse) {
   if (p === "chat/send") {
-    aiChat(body.message || "").then((reply) => {
+    const history: { role: string; content: string }[] = body.history || [];
+    aiChat(body.message || "", history).then((reply) => {
       res.json({ thread_id: body.thread_id || "t-" + Date.now(), reply: { id: "ai-" + Date.now(), role: "assistant", content: reply, citations: [], created_at: new Date().toISOString() } });
     });
     return;
@@ -221,7 +222,7 @@ function buildContext(message: string): string {
   return context.length > 0 ? context.join("\n\n---\n\n") : "";
 }
 
-async function aiChat(message: string): Promise<string> {
+async function aiChat(message: string, history: { role: string; content: string }[] = []): Promise<string> {
   try {
     const key = process.env.DEEPSEEK_API_KEY || "";
     const ctx = buildContext(message);
@@ -231,27 +232,26 @@ async function aiChat(message: string): Promise<string> {
       : SYSTEM_PROMPT;
 
     if (!key) {
-      // 无 API key 时用本地知识直接回复
       if (ctx) {
         const parts = ctx.split("\n\n---\n\n");
-        const best = parts[0] || "";
-        return best.replace(/^## /, "## ").trim() + "\n\n> 配置 DeepSeek API Key 可获得更详细的回答。";
+        return (parts[0] || "").replace(/^## /, "## ").trim() + "\n\n> 配置 DeepSeek API Key 可获得更详细的回答。";
       }
       return "未配置 `DEEPSEEK_API_KEY`。请到 Vercel → Settings → Environment Variables 添加。";
     }
 
+    // 拼接完整 messages：system + history + 当前问题
+    const messages: { role: string; content: string }[] = [
+      { role: "system", content: sysContent },
+    ];
+    for (const h of history) {
+      messages.push({ role: h.role, content: h.content });
+    }
+    messages.push({ role: "user", content: message });
+
     const resp = await fetch("https://api.deepseek.com/v1/chat/completions", {
       method: "POST",
       headers: { "Content-Type": "application/json", Authorization: `Bearer ${key}` },
-      body: JSON.stringify({
-        model: "deepseek-chat",
-        messages: [
-          { role: "system", content: sysContent },
-          { role: "user", content: message },
-        ],
-        temperature: 0.7,
-        max_tokens: 2000,
-      }),
+      body: JSON.stringify({ model: "deepseek-chat", messages, temperature: 0.7, max_tokens: 2000 }),
     });
     const data = await resp.json();
     return data.choices?.[0]?.message?.content || "";
