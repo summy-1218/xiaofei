@@ -2,11 +2,11 @@ import type { NextApiRequest, NextApiResponse } from "next";
 import fs from "fs";
 import path from "path";
 
-const ROOT = path.resolve(process.cwd(), "..");
-const QUIZ_PATH = path.join(ROOT, "data", "quiz", "081_modify_Wang.json");
-const COURSE_DIR = path.join(ROOT, "data", "courseware", "飞行原理");
-const THUMBS_DIR = path.join(ROOT, "data", "thumbnails");
-const FIGURES_DIR = path.join(ROOT, "data", "quiz", "Figures");
+const ROOT = process.cwd();
+const QUIZ_PATH = path.join(ROOT, "public", "data", "quiz", "081_modify_Wang.json");
+const COURSE_DIR = path.join(ROOT, "public", "data", "courseware", "飞行原理");
+const THUMBS_DIR = path.join(ROOT, "public", "data", "thumbnails");
+const FIGURES_DIR = path.join(ROOT, "public", "data", "quiz", "Figures");
 
 function loadQuiz(): any[] {
   if (!fs.existsSync(QUIZ_PATH)) return [];
