@@ -93,10 +93,23 @@ function handleGET(p: string, req: NextApiRequest, res: NextApiResponse) {
     return res.json(ms.map((m: any) => ({ id: m.id, title: m.title, fileName: m.filename, fileSize: m.size, tag: m.chapter, thumbnailUrl: `/api/materials/thumbnail/${m.id}`, pages: 20 + Math.floor(Math.random() * 60), uploadedAt: "2025-03", viewCount: Math.floor(Math.random() * 300 + 10), downloadCount: Math.floor(Math.random() * 150 + 5), favorited: false })));
   }
   if (p === "materials/reading") return res.json(listMats().filter((m: any) => m.type === "reading").map((m: any) => ({ id: m.id, title: m.title, fileName: m.filename, fileSize: m.size, tag: "补充读物", thumbnailUrl: `/api/materials/thumbnail/${m.id}`, pages: 0, uploadedAt: "2025", viewCount: 0, downloadCount: 0, favorited: false })));
-  // PDF download: redirect to public static
-  if (p.startsWith("materials/download/")) { const m = getMat(p.replace("materials/download/", "")); if (!m) return res.status(404).end(""); res.redirect(307, `/data/courseware/飞行原理/${encodeURIComponent(m.filename)}`); return; }
-  // Thumbnail: redirect to public static
-  if (p.startsWith("materials/thumbnail/")) { res.redirect(307, `/data/thumbnails/${p.replace("materials/thumbnail/", "")}.png`); return; }
+  // PDF download: 直接读文件返回
+  if (p.startsWith("materials/download/")) {
+    const m = getMat(p.replace("materials/download/", ""));
+    if (!m) return res.status(404).end("");
+    const fp = path.join(COURSE_DIR, m.filename);
+    if (!fs.existsSync(fp)) return res.status(404).end("");
+    res.setHeader("Content-Type", "application/pdf");
+    res.setHeader("Content-Disposition", `inline; filename="${encodeURIComponent(m.filename)}"`);
+    return res.send(fs.readFileSync(fp));
+  }
+  // Thumbnail: 直接读文件
+  if (p.startsWith("materials/thumbnail/")) {
+    const tp = path.join(ROOT, "public", "data", "thumbnails", `${p.replace("materials/thumbnail/", "")}.png`);
+    if (!fs.existsSync(tp)) return res.status(404).end("");
+    res.setHeader("Content-Type", "image/png");
+    return res.send(fs.readFileSync(tp));
+  }
 
   // Forum
   if (p === "forum/pulse") return res.json({ totalPosts: 4, solvedRate: 25, todayNew: Math.floor(Math.random() * 3), myPending: Math.floor(Math.random() * 2) });

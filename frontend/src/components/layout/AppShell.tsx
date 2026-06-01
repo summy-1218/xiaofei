@@ -9,8 +9,8 @@ export function AppShell({ children }: { children: React.ReactNode }) {
 
   return (
     <div id="root" className="flex h-full overflow-hidden">
-      {/* ── 桌面侧边栏 ────────────────── */}
-      <div className="hidden md:block">
+      {/* ── 桌面侧边栏（直接作为flex子项，占满高度）── */}
+      <div className="hidden md:flex h-full shrink-0">
         <Sidebar />
       </div>
 
