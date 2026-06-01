@@ -1025,11 +1025,6 @@ html, body, #root {
    移动端响应式
    ══════════════════════════════════════════════════════ */
 @media (max-width: 768px) {
-  /* 侧边栏隐藏 */
-  aside {
-    display: none !important;
-  }
-
   /* 主内容全宽 */
   .main-flex, main[class*="main-flex"] {
     padding-left: 0 !important;
