@@ -1020,3 +1020,85 @@ html, body, #root {
 /* ── 社区 pulse 专用 tint ────────────────── */
 .ov-tint-open   { background: rgba(245,158,11,0.14); color: #F59E0B; }
 .ov-tint-solved { background: rgba(52,211,153,0.14); color: #16A34A; }
+
+/* ══════════════════════════════════════════════════════
+   移动端响应式
+   ══════════════════════════════════════════════════════ */
+@media (max-width: 768px) {
+  /* 侧边栏隐藏 */
+  aside {
+    display: none !important;
+  }
+
+  /* 主内容全宽 */
+  .main-flex, main[class*="main-flex"] {
+    padding-left: 0 !important;
+  }
+  .main-header {
+    padding: 16px 16px 10px !important;
+  }
+  .main-scroll {
+    padding: 0 !important;
+  }
+
+  /* 页面内容 padding 缩减 */
+  .main-scroll > div {
+    padding: 16px 16px 60px !important;
+    max-width: 100% !important;
+  }
+
+  /* 标题 */
+  h1, [class*="text-heading-2"] { font-size: 22px !important; }
+  h2, [class*="text-heading-4"] { font-size: 18px !important; }
+
+  /* 卡片网格 → 单列 */
+  .ppt-grid { grid-template-columns: 1fr !important; }
+  .mode-grid { grid-template-columns: 1fr !important; }
+  .quick-entries { grid-template-columns: 1fr 1fr !important; }
+  .quick-entries > a:first-child { grid-column: 1 / -1; }
+  .stat-strip { grid-template-columns: repeat(2, 1fr) !important; }
+  .overview-strip { grid-template-columns: repeat(2, 1fr) !important; }
+
+  /* 工具栏折叠 */
+  .toolbar-row {
+    grid-template-columns: 1fr !important;
+    gap: 10px;
+  }
+
+  /* Composer */
+  .composer--hero { width: 100% !important; }
+  .composer--thread { width: 100% !important; max-width: 100% !important; }
+
+  /* 章节选择器 */
+  .cp-row { grid-template-columns: 24px 60px 1fr 50px; }
+  .cp-progress { display: none; }
+  .cp-done { display: none; }
+
+  /* 消息 */
+  .chat-message-user, .chat-message-assistant { max-width: 100% !important; }
+  .thread-messages { padding: 16px 12px !important; }
+
+  /* 帖子 */
+  .post-card { padding: 14px 16px 12px; }
+  .post-actions { gap: 10px; flex-wrap: wrap; }
+
+  /* 选项按钮 */
+  .option-btn { padding: 10px 12px; font-size: 14px; }
+
+  /* 首页 hero */
+  .home-hero-text h1 { font-size: 22px !important; }
+
+  /* 题库页 stat cards */
+  .stat-card { padding: 12px 14px; height: auto; }
+  .stat-value { font-size: 22px; }
+
+  /* 资料页 overview */
+  .ov-card { padding: 10px 12px; height: auto; }
+  .ov-value { font-size: 16px; }
+}
+
+@media (max-width: 480px) {
+  .quick-entries { grid-template-columns: 1fr !important; }
+  .stat-strip { grid-template-columns: 1fr 1fr !important; }
+  .overview-strip { grid-template-columns: 1fr 1fr !important; }
+}
