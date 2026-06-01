@@ -181,9 +181,12 @@ async function aiChat(message: string): Promise<string> {
   try {
     const key = process.env.DEEPSEEK_API_KEY || "";
     if (!key) { const q = message.toLowerCase(); if (q.includes("升力")) return "## 升力公式\n$$L = \\frac12\\rho V^2 S C_L$$"; if (q.includes("失速")) return "## 失速\n超临界攻角后气流分离。改出：推杆减攻角→保水平→加油门。"; return "配置 `DEEPSEEK_API_KEY` 环境变量可启用 AI 大模型。"; }
-    const { default: OpenAI } = await import("openai");
-    const client = new OpenAI({ apiKey: key, baseURL: "https://api.deepseek.com" });
-    const r = await client.chat.completions.create({ model: "deepseek-chat", messages: [{ role: "user", content: message }] as any, temperature: 0.7, max_tokens: 2000 });
-    return r.choices[0]?.message?.content || "";
+    const resp = await fetch("https://api.deepseek.com/v1/chat/completions", {
+      method: "POST",
+      headers: { "Content-Type": "application/json", "Authorization": `Bearer ${key}` },
+      body: JSON.stringify({ model: "deepseek-chat", messages: [{ role: "user", content: message }], temperature: 0.7, max_tokens: 2000 }),
+    });
+    const data = await resp.json();
+    return data.choices?.[0]?.message?.content || "AI 返回为空。";
   } catch { return "AI 暂不可用。"; }
 }
