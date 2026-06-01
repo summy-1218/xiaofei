@@ -30,7 +30,7 @@ export function Sidebar({ onNavigate }: { onNavigate?: () => void }) {
       {/* 新建对话 */}
       <div className="px-3 pt-3">
         <button
-          onClick={() => onNavigate?.(); router.push("/")}
+          onClick={() => { onNavigate?.(); router.push("/"); }}
           className="flex w-full items-center gap-2 rounded-md px-3 py-2 text-sm text-white/80 transition-colors hover:bg-white/10"
         >
           <Plus size={16} />
@@ -49,7 +49,7 @@ export function Sidebar({ onNavigate }: { onNavigate?: () => void }) {
               {items.map((t) => (
                 <button
                   key={t.id}
-                  onClick={() => onNavigate?.(); router.push(`/thread/${t.id}`)}
+                  onClick={() => { onNavigate?.(); router.push(`/thread/${t.id}`); }}
                   className={`flex w-full items-center gap-2 rounded-md px-3 py-2 text-sm transition-colors group ${
                     pathname === `/thread/${t.id}`
                       ? "bg-white/15 text-white"
@@ -83,7 +83,7 @@ export function Sidebar({ onNavigate }: { onNavigate?: () => void }) {
         ].map(({ icon: Icon, label, href }) => (
           <button
             key={href}
-            onClick={() => onNavigate?.(); router.push(href)}
+            onClick={() => { onNavigate?.(); router.push(href); }}
             className={`flex w-full items-center gap-3 rounded-md px-3 py-2 text-sm transition-colors ${
               isActive(href)
                 ? "bg-white/15 text-white"
