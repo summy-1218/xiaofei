@@ -14,7 +14,7 @@ export function Sidebar() {
   const groups = groupThreads(threads);
 
   const isActive = (href: string) =>
-    href === "/" ? pathname === "/" : pathname.startsWith(href);
+    href === "/" ? pathname === "/" : (pathname ?? "").startsWith(href);
 
   return (
     <aside className="flex w-[260px] shrink-0 flex-col bg-gradient-to-b from-[#0a1530] to-[#070f24] text-white">
