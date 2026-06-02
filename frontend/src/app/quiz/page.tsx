@@ -1,12 +1,13 @@
 "use client";
 
-import { StatStrip } from "@/components/qbank/StatStrip";
-import { QuickEntries } from "@/components/qbank/QuickEntries";
 import { ModeCards } from "@/components/qbank/ModeCards";
 import { ChapterPicker } from "@/components/qbank/ChapterPicker";
 import { FilterChips } from "@/components/qbank/FilterChips";
 import { StartCTA } from "@/components/qbank/StartCTA";
 import { useQbankStore } from "@/stores/qbank";
+// TODO: 用户功能上线后恢复导入
+// import { StatStrip } from "@/components/qbank/StatStrip";
+// import { QuickEntries } from "@/components/qbank/QuickEntries";
 
 function ModeCountSelector() {
   const mode = useQbankStore((s) => s.mode);
@@ -43,13 +44,11 @@ export default function QuizPage() {
       {/* 唯一滚动容器 */}
       <div className="main-scroll flex-1 overflow-y-auto" style={{ scrollbarGutter: "stable" }}>
         <div style={{ maxWidth: 960, margin: "0 auto", padding: "24px 32px 80px" }}>
-          {/* Block 1: KPI 学情条 */}
+{/* TODO: 用户功能上线后恢复
           <StatStrip courseCode="081" />
-
-          {/* Block 2: 快捷入口 */}
           <QuickEntries courseCode="081" />
-
-          {/* Block 3: 模式选择卡片 */}
+*/}
+          {/* 模式选择卡片 */}
           <section style={{ marginBottom: 32 }}>
             <h2 className="text-sm font-semibold text-charcoal mb-3">选择练习方式</h2>
             <ModeCards />
